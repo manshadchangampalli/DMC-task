@@ -25,14 +25,16 @@ function App() {
   }, []);
   const userClicked = (e) => {
     const randomColor = Math.floor(Math.random()*16777215).toString(16);
+    const randomHeight = Math.floor(Math.random()*80)+20
+    console.log(randomHeight);
     const { clientX, clientY } = e;
     database.ref(localStorage.getItem("name")).set({
       name : localStorage.getItem("name"),
       pos:{ left: clientX, top: clientY },
-      color:randomColor
+      color:randomColor,
+      width:randomHeight
     }).catch(alert);
   };
-  console.log(fireData);
   return (
     <div className="App">
       {nameBox && <InputPage setNameBox={setNameBox} />}
@@ -40,7 +42,7 @@ function App() {
         { fireData.map((data,i)=>( 
           <div key={i} className="userDot" style={{top:`${data.pos.top - 100}px`,left:`${data.pos.left - 100}px`}} >
             <p >{data.name}</p>
-            <div style={{background:`#${data.color}`}} className="dot"></div>
+            <div style={{background:`#${data.color}`,width:`${data.width}px`,height:`${data.width}px`}} className="dot"></div>
           </div>
         ))
         }
